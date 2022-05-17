@@ -56,8 +56,7 @@ class AddressBook(object):
         except KeyboardInterrupt as error:
             raise error
 
-        # To display ALL the contact in our Address Book
-
+    # To display ALL the contact in our Address Book
     def display_contacts(self):
         if os.path.exists(self.filename) and os.path.getsize(self.filename) > 0:
             myAddressBook = open(self.filename, 'r')
@@ -90,12 +89,63 @@ class AddressBook(object):
         else:
             print('No Record in database.')
 
+    # For modifying contacts
+    def modify_contacts(self):
+        if os.path.exists(self.filename) and os.path.getsize(self.filename) > 0:
+            myAddressBook = open(self.filename, 'r')
+            data = json.load(myAddressBook)
+            myAddressBook.close()
+            try:
+                contactToModify = input('Enter the name of the contact to modify (Only enter full name): ')
+                # Search for the record to update
+                for contact in data.values():
+                    if contactToModify == contact['Name']:
+                        contact = data[contactToModify]
+                        break
+                option = int(input('1. To modify name, 2. To modify address, 3. To modify email, 4. To modify phone, '
+                                   '5. To modify zip:'))
+                if option == 1:
+                    contact['Name'] = input('Enter Name to modify: ')
+                    del data[contactToModify]
+                    data[contact['Name']] = contact
+                    print('Successful')
+                elif option == 2:
+                    contact['Address'] = input('Enter Address to modify: ')
+                    del data[contactToModify]
+                    data[contactToModify] = contact
+                    print('Successful')
+                elif option == 3:
+                    contact['Email'] = input('Enter Email to modify: ')
+                    del data[contactToModify]
+                    data[contactToModify] = contact
+                    print('Successful')
+                elif option == 4:
+                    contact['Phone'] = input('Enter Phone to modify: ')
+                    del data[contactToModify]
+                    data[contactToModify] = contact
+                    print('Successful')
+                elif option == 5:
+                    contact['Zip'] = input('Enter Zip to modify: ')
+                    del data[contactToModify]
+                    data[contactToModify] = contact
+                    print('Successful')
+                else:
+                    print('Incorrect option selected.')
+            except:
+                print('Error occurred. No such record found. Try Again!')
+            finally:
+                myAddressBook = open(self.filename, 'w')
+                json.dump(data, myAddressBook, indent=4)
+                myAddressBook.close()
+        else:
+            print('No Record in database.')
+
 
 if __name__ == '__main__':
     myBook = AddressBook()
     print(
         'Enter\n 1. To Add Contacts\n 2. To Display '
-        'Contacts\n 3. For Searching a Contact\n 4. To Exit')
+        'Contacts\n 3. For Searching a Contact\n 4. For Modifying a Contact\n 5. To Exit')
     while True:
         choice = int(input('Enter your choice: '))
         if choice == 1:
@@ -105,6 +155,8 @@ if __name__ == '__main__':
         elif choice == 3:
             myBook.search_contacts()
         elif choice == 4:
+            myBook.modify_contacts()
+        elif choice == 5:
             exit()
         else:
             print('Invalid Option. Try Again!')
