@@ -56,16 +56,33 @@ class AddressBook(object):
         except KeyboardInterrupt as error:
             raise error
 
+        # To display ALL the contact in our Address Book
+
+    def display_contacts(self):
+        if os.path.exists(self.filename) and os.path.getsize(self.filename) > 0:
+            myAddressBook = open(self.filename, 'r')
+            data = json.load(myAddressBook)
+            myAddressBook.close()
+            if data:
+                for records in data.values():
+                    print(records)
+            myAddressBook.close()
+        else:
+            print('No Record in database.')
+
 
 if __name__ == '__main__':
     myBook = AddressBook()
     print(
-        'Enter\n 1. To Add Contacts\n 2. To Exit')
+        'Enter\n 1. To Add Contacts\n 2. To Display '
+        'Contacts\n 3. To Exit')
     while True:
         choice = int(input('Enter your choice: '))
         if choice == 1:
             myBook.add_contacts()
         elif choice == 2:
+            myBook.display_contacts()
+        elif choice == 3:
             exit()
         else:
             print('Invalid Option. Try Again!')
