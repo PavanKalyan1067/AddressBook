@@ -1,0 +1,23 @@
+{
+    "Pavan": {
+        "Name": "Pavan",
+        "Address": "Telangana",
+        "Email": "pavan@gmail.com",
+        "Phone": 9658741236,
+        "Zip": 586497
+    },
+    "Virat": {
+        "Name": "Virat",
+        "Address": "Bangalore",
+        "Email": "virat@gmail.com",
+        "Phone": 9623145874,
+        "Zip": 632541
+    },
+    "Kgf": {
+        "Name": "Kgf",
+        "Address": "Bangalore",
+        "Email": "kgf@gmail.com",
+        "Phone": 8547632195,
+        "Zip": 632894
+    }
+}
