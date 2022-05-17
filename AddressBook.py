@@ -70,12 +70,32 @@ class AddressBook(object):
         else:
             print('No Record in database.')
 
+    # To search for a specific contact in our Address Book
+    def search_contacts(self):
+        if os.path.exists(self.filename) and os.path.getsize(self.filename) > 0:
+            myAddressBook = open(self.filename, 'r')
+            data = json.load(myAddressBook)
+            myAddressBook.close()
+            try:
+                contactToSearch = input('Enter the name of the contact to search: ')
+                counter = 0
+                for contact in data.values():
+                    if contactToSearch in contact['Name']:
+                        print(data[contact['Name']])
+                        counter += 1
+                if counter == 0:
+                    print('No record found whose name is:', contactToSearch)
+            except:
+                print('Error occurred!')
+        else:
+            print('No Record in database.')
+
 
 if __name__ == '__main__':
     myBook = AddressBook()
     print(
         'Enter\n 1. To Add Contacts\n 2. To Display '
-        'Contacts\n 3. To Exit')
+        'Contacts\n 3. For Searching a Contact\n 4. To Exit')
     while True:
         choice = int(input('Enter your choice: '))
         if choice == 1:
@@ -83,6 +103,8 @@ if __name__ == '__main__':
         elif choice == 2:
             myBook.display_contacts()
         elif choice == 3:
+            myBook.search_contacts()
+        elif choice == 4:
             exit()
         else:
             print('Invalid Option. Try Again!')
